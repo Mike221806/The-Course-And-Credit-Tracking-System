@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.AdvisorStudentDetailsController"
+      spacing="20" styleClass="details-container">
 
-</AnchorPane>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Student Details" styleClass="section-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Select Student:"/>
+        <ComboBox fx:id="studentComboBox" prefWidth="200"/>
+        <Button text="Load Details" fx:id="loadButton" onAction="#handleLoad" styleClass="primary-button"/>
+    </HBox>
+
+    <GridPane hgap="15" vgap="10" alignment="CENTER">
+        <Label text="Student ID:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <Label fx:id="studentIdLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="field-value"/>
+
+        <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <Label fx:id="studentNameLabel" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="field-value"/>
+
+        <Label text="Program:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+        <Label fx:id="studentProgramLabel" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="field-value"/>
+    </GridPane>
+
+    <Separator/>
+
+    <Label text="Course Enrollments" styleClass="subsection-title"/>
+
+    <VBox spacing="10" maxWidth="580" prefWidth="560">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <TableView fx:id="enrollmentsTable" prefHeight="250">
+            <columns>
+                <TableColumn fx:id="courseCodeColumn" text="Course Code" prefWidth="100"/>
+                <TableColumn fx:id="courseTitleColumn" text="Course Title" prefWidth="200"/>
+                <TableColumn fx:id="semesterColumn" text="Semester" prefWidth="100"/>
+                <TableColumn fx:id="yearColumn" text="Year" prefWidth="80"/>
+                <TableColumn fx:id="gradeColumn" text="Grade" prefWidth="80"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Refresh" fx:id="refreshButton" onAction="#handleRefresh" styleClass="secondary-button"/>
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+</VBox>
