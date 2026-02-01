@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.LoginController"
+      spacing="20" alignment="CENTER" styleClass="login-container"
+      minWidth="1000" minHeight="700" prefWidth="1050" prefHeight="750">
+
+    <padding>
+        <Insets top="20" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Course &amp; Credit Tracking System" styleClass="title-label"/>
+
+    <VBox spacing="25" alignment="CENTER" styleClass="form-container" maxWidth="500">
+        <padding>
+            <Insets top="40" right="35" bottom="40" left="35"/>
+        </padding>
+
+        <GridPane hgap="30" vgap="30" alignment="CENTER">
+            <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="form-label"/>
+            <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300" prefHeight="40" styleClass="form-input"/>
+
+            <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="form-label"/>
+            <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="300" prefHeight="40" styleClass="form-input"/>
+
+            <Label text="Role:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="form-label"/>
+            <ComboBox fx:id="roleComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="300" prefHeight="40" styleClass="form-input"/>
+        </GridPane>
+
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Login" fx:id="loginButton" onAction="#handleLogin" styleClass="primary-button" prefWidth="120" prefHeight="45"/>
+            <Button text="Clear" fx:id="clearButton" onAction="#handleClear" styleClass="secondary-button" prefWidth="120" prefHeight="45"/>
+        </HBox>
+    </VBox>
+
+    <Label fx:id="messageLabel" styleClass="message-label"/>
+</VBox>

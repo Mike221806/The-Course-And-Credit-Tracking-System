@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.university.ui.AdvisorDashboardController">
+
+    <top>
+        <VBox styleClass="header">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label fx:id="welcomeLabel" styleClass="header-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Logout" onAction="#handleLogout" styleClass="logout-button"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Search Student" onAction="#showSearchStudent" styleClass="nav-button"/>
+                <Button text="Student Details" onAction="#showStudentDetails" styleClass="nav-button"/>
+                <Button text="Update Grades" onAction="#showUpdateGrades" styleClass="nav-button"/>
+                <Button text="Generate Student Report" onAction="#generateStudentReport" styleClass="nav-button"/>
+                <Button text="Manage Students" onAction="#manageStudents" styleClass="nav-button"/>
+                <Button text="Course Enrollment" onAction="#manageCourseEnrollment" styleClass="nav-button"/>
+                <Button text="Add Feedback" onAction="#addFeedback" styleClass="nav-button"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <StackPane fx:id="contentPane">
+            <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                <VBox spacing="20" alignment="CENTER" styleClass="dashboard-content">
+                    <padding>
+                        <Insets top="50" right="50" bottom="50" left="50"/>
+                    </padding>
+                    <Label text="Welcome to Advisor Dashboard" styleClass="welcome-title"/>
+                    <Label text="Select an option from the navigation menu above" styleClass="welcome-subtitle"/>
+                    <Label fx:id="summaryLabel" styleClass="summary-info"/>
+                </VBox>
+            </ScrollPane>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox styleClass="footer" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="Course &amp; Credit Tracking System © 2024"/>
+        </HBox>
+    </bottom>
+</BorderPane>
