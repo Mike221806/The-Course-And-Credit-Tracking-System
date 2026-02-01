@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.university.ui.StudentDashboardController">
 
-</AnchorPane>
+    <top>
+        <VBox styleClass="header">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label fx:id="welcomeLabel" styleClass="header-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Logout" onAction="#handleLogout" styleClass="logout-button"/>
+            </HBox>
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="My Profile" onAction="#showProfile" styleClass="nav-button"/>
+                <Button text="My Courses" onAction="#showCourses" styleClass="nav-button"/>
+                <Button text="Coursework" onAction="#showCoursework" styleClass="nav-button"/>
+                <Button text="GPA &amp; Progress" onAction="#showGPA" styleClass="nav-button"/>
+                <Button text="Advisor Feedback" onAction="#showFeedback" styleClass="nav-button"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <StackPane fx:id="contentPane">
+            <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                <VBox spacing="20" alignment="CENTER" styleClass="dashboard-content">
+                    <padding>
+                        <Insets top="50" right="50" bottom="50" left="50"/>
+                    </padding>
+                    <Label text="Welcome to Student Dashboard" styleClass="welcome-title"/>
+                    <Label text="Select an option from the navigation menu above" styleClass="welcome-subtitle"/>
+                </VBox>
+            </ScrollPane>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox styleClass="footer" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="Course &amp; Credit Tracking System © 2024"/>
+        </HBox>
+    </bottom>
+</BorderPane>
