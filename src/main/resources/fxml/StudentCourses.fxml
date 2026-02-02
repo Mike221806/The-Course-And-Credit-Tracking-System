@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.StudentCoursesController"
+      spacing="20" styleClass="courses-container">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="My Courses" styleClass="section-title"/>
+
+    <TableView fx:id="coursesTable" prefHeight="300" prefWidth="1000">
+        <columns>
+            <TableColumn fx:id="courseCodeColumn" text="Course Code" prefWidth="160" sortable="false"/>
+            <TableColumn fx:id="courseTitleColumn" text="Course Title" prefWidth="400" sortable="false"/>
+            <TableColumn fx:id="creditsColumn" text="Credits" prefWidth="100" sortable="false"/>
+            <TableColumn fx:id="semesterColumn" text="Semester" prefWidth="120" sortable="false"/>
+            <TableColumn fx:id="yearColumn" text="Year" prefWidth="100" sortable="false"/>
+            <TableColumn fx:id="gradeColumn" text="Grade" prefWidth="100" sortable="false"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Refresh" fx:id="refreshButton" onAction="#handleRefresh" styleClass="primary-button"/>
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.AdvisorUpdateGradesController"
+      spacing="20" styleClass="grades-container">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Update Student Grades" styleClass="section-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Select Student:"/>
+        <ComboBox fx:id="studentComboBox" prefWidth="200"/>
+        <Button text="Load Grades" fx:id="loadButton" onAction="#handleLoad" styleClass="primary-button"/>
+    </HBox>
+
+    <TabPane fx:id="gradeTabPane" tabClosingPolicy="UNAVAILABLE">
+        <Tab text="Course Grades">
+            <VBox spacing="10" maxWidth="690" prefWidth="680">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="courseGradesTable" editable="false" VBox.vgrow="ALWAYS" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="courseCodeColumn" text="Course Code" prefWidth="120" sortable="false"/>
+                        <TableColumn fx:id="courseTitleColumn" text="Course Title" prefWidth="180" sortable="false"/>
+                        <TableColumn fx:id="semesterColumn" text="Semester" prefWidth="120" sortable="false"/>
+                        <TableColumn fx:id="yearColumn" text="Year" prefWidth="80" sortable="false"/>
+                        <TableColumn fx:id="gradeColumn" text="Grade (Calculated)" prefWidth="150" sortable="false"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <Tab text="Coursework Grades">
+            <VBox spacing="10" maxWidth="680" prefWidth="660">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="courseworkGradesTable" editable="true" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="courseCodeCourseworkColumn" text="Course Code" prefWidth="120" sortable="false"/>
+                        <TableColumn fx:id="itemTitleColumn" text="Item Title" prefWidth="180" sortable="false"/>
+                        <TableColumn fx:id="itemTypeColumn" text="Type" prefWidth="100" sortable="false"/>
+                        <TableColumn fx:id="marksColumn" text="Marks" prefWidth="100" sortable="false"/>
+                        <TableColumn fx:id="totalMarksColumn" text="Total Marks" prefWidth="120" sortable="false"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Save Changes" fx:id="saveButton" onAction="#handleSave" styleClass="primary-button"/>
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+</VBox>

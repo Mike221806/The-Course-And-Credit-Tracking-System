@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.StudentCourseworkController"
+      spacing="20" styleClass="coursework-container">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="My Coursework" styleClass="section-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Select Course:"/>
+        <ComboBox fx:id="courseComboBox" prefWidth="200"/>
+        <Button text="Load Coursework" fx:id="loadButton" onAction="#handleLoadCoursework" styleClass="primary-button"/>
+    </HBox>
+
+    <TabPane fx:id="courseworkTabPane" tabClosingPolicy="UNAVAILABLE">
+        <Tab text="Assignments">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="assignmentsTable" prefHeight="200">
+                    <columns>
+                        <TableColumn fx:id="assignmentTitleColumn" text="Title" prefWidth="220"/>
+                        <TableColumn fx:id="assignmentDueDateColumn" text="Due Date" prefWidth="140"/>
+                        <TableColumn fx:id="assignmentTotalMarksColumn" text="Total Marks" prefWidth="120"/>
+                        <TableColumn fx:id="assignmentWeightColumn" text="Weight" prefWidth="100"/>
+                        <TableColumn fx:id="assignmentStatusColumn" text="Status" prefWidth="120"/>
+                        <TableColumn fx:id="assignmentGradeColumn" text="Grade" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <Tab text="Mid-Exams">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="midExamsTable" prefHeight="200">
+                    <columns>
+                        <TableColumn fx:id="midExamTitleColumn" text="Title" prefWidth="220"/>
+                        <TableColumn fx:id="midExamDateColumn" text="Exam Date" prefWidth="140"/>
+                        <TableColumn fx:id="midExamTotalMarksColumn" text="Total Marks" prefWidth="120"/>
+                        <TableColumn fx:id="midExamWeightColumn" text="Weight" prefWidth="100"/>
+                        <TableColumn fx:id="midExamStatusColumn" text="Status" prefWidth="120"/>
+                        <TableColumn fx:id="midExamGradeColumn" text="Grade" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <Tab text="Final Exams">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="finalExamsTable" prefHeight="200">
+                    <columns>
+                        <TableColumn fx:id="finalExamTitleColumn" text="Title" prefWidth="220"/>
+                        <TableColumn fx:id="finalExamDateColumn" text="Exam Date" prefWidth="140"/>
+                        <TableColumn fx:id="finalExamTotalMarksColumn" text="Total Marks" prefWidth="120"/>
+                        <TableColumn fx:id="finalExamWeightColumn" text="Weight" prefWidth="100"/>
+                        <TableColumn fx:id="finalExamStatusColumn" text="Status" prefWidth="120"/>
+                        <TableColumn fx:id="finalExamGradeColumn" text="Grade" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <Tab text="All Coursework">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <TableView fx:id="allCourseworkTable" prefHeight="200">
+                    <columns>
+                        <TableColumn fx:id="courseworkTypeColumn" text="Type" prefWidth="100"/>
+                        <TableColumn fx:id="courseworkTitleColumn" text="Title" prefWidth="220"/>
+                        <TableColumn fx:id="courseworkDueDateColumn" text="Due Date" prefWidth="140"/>
+                        <TableColumn fx:id="courseworkTotalMarksColumn" text="Total Marks" prefWidth="120"/>
+                        <TableColumn fx:id="courseworkWeightColumn" text="Weight" prefWidth="100"/>
+                        <TableColumn fx:id="courseworkStatusColumn" text="Status" prefWidth="120"/>
+                        <TableColumn fx:id="courseworkGradeColumn" text="Grade" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+
+    <VBox spacing="10" styleClass="summary-box">
+        <Label text="Summary" styleClass="summary-title"/>
+        <HBox spacing="20">
+            <Label fx:id="overallGradeLabel" text="Overall Grade: N/A" styleClass="summary-value"/>
+            <Label fx:id="totalItemsLabel" text="Total Items: 0" styleClass="summary-value"/>
+        </HBox>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Refresh Courses" fx:id="refreshButton" onAction="#handleRefreshCourses" styleClass="secondary-button"/>
+    </HBox>
+</VBox>
