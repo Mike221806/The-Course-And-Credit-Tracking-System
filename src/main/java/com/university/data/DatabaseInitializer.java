@@ -7,6 +7,8 @@ import com.university.services.PasswordUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Database initialization class that creates sample data for the application.
@@ -69,8 +71,10 @@ public class DatabaseInitializer {
      */
     private void createSampleAdvisors() {
         List<Advisor> advisors = Arrays.asList(
-                new Advisor(0, "Mr. Abel Tadesse", "Abel T", PasswordUtil.hashPassword("abel1234"), "Software Engineering", "abel.t@university.edu"),
-                new Advisor(0, "Prof. Michael Sheleme", "Michael S", PasswordUtil.hashPassword("michael1234"), "Software Engineering", "michael.s@university.edu")
+                new Advisor(0, "Mr. Abel Tadesse", "Abel T", PasswordUtil.hashPassword("abel1234"), "Software Engineering", "abel.tadesse@university.edu"),
+                new Advisor(0, "Prof. Michael Sheleme", "Michael S", PasswordUtil.hashPassword("michael1234"), "Computer Science", "michael.sheleme@university.edu"),
+                new Advisor(0, "Dr. Sarah Johnson", "Sarah J", PasswordUtil.hashPassword("sarah1234"), "Information Technology", "sarah.johnson@university.edu"),
+                new Advisor(0, "Prof. David Chen", "David C", PasswordUtil.hashPassword("david1234"), "Software Engineering", "david.chen@university.edu")
         );
 
         for (Advisor advisor : advisors) {
@@ -82,6 +86,17 @@ public class DatabaseInitializer {
      * Creates sample students.
      */
     private void createSampleStudents() {
+        // Check if students already exist
+        try {
+            List<Student> existingStudents = studentDetails.getAllStudents();
+            if (!existingStudents.isEmpty()) {
+                System.out.println("Students already exist, skipping sample student creation");
+                return;
+            }
+        } catch (Exception e) {
+            System.err.println("Error checking existing students: " + e.getMessage());
+        }
+
         List<Student> students = Arrays.asList(
                 new Student(0, "Alice Smith", "asmith", PasswordUtil.hashPassword("password123"), "Computer Science", 120, 45),
                 new Student(0, "Bob Johnson", "bjohnson", PasswordUtil.hashPassword("password123"), "Computer Science", 120, 30),
@@ -130,23 +145,47 @@ public class DatabaseInitializer {
      * Creates sample enrollments.
      */
     private void createSampleEnrollments() {
+        // Check if enrollments already exist for Alice (student ID 1)
+        try {
+            List<Enrollment> aliceEnrollments = enrollmentDetails.getEnrollmentsByStudentId(1);
+            if (!aliceEnrollments.isEmpty()) {
+                System.out.println("Enrollments already exist, skipping sample enrollment creation");
+                return;
+            }
+        } catch (Exception e) {
+            System.err.println("Error checking existing enrollments: " + e.getMessage());
+        }
+
+        // Wait for students to be created and get their IDs
+        try {
+            Thread.sleep(100); // Small delay to ensure students are created
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         List<Enrollment> enrollments = Arrays.asList(
-                // Alice Smith enrollments (student ID will be 1 after auto-increment)
-                new Enrollment(0, 1, "CS101", "Fall", 2023, "A"),
-                new Enrollment(0, 1, "CS201", "Fall", 2023, "B"),
-                new Enrollment(0, 1, "MATH101", "Fall", 2023, "A"),
-                new Enrollment(0, 1, "ENG101", "Fall", 2023, null), // No grade yet
+                // Alice Smith enrollments (student ID 1) - Excellent student
+                new Enrollment(0, 1, "CS101", "Introduction to Computer Science", 3, "Fall", 2023, "A+"),  // 90%+
+                new Enrollment(0, 1, "CS201", "Data Structures", 4, "Fall", 2023, "A"),     // 85-89%
+                new Enrollment(0, 1, "MATH101", "Calculus I", 4, "Fall", 2023, "A+"),    // 90%+
+                new Enrollment(0, 1, "ENG101", "English Composition", 3, "Fall", 2023, null), // No grade yet
 
-                // Bob Johnson enrollments (student ID will be 2 after auto-increment)
-                new Enrollment(0, 2, "CS101", "Fall", 2023, "C"),
-                new Enrollment(0, 2, "ENG101", "Fall", 2023, "B"),
-                new Enrollment(0, 2, "CS301", "Fall", 2023, null), // No grade yet
+                // Bob Johnson enrollments (student ID 2) - Average student
+                new Enrollment(0, 2, "CS101", "Introduction to Computer Science", 3, "Fall", 2023, "C+"), // 60-64%
+                new Enrollment(0, 2, "ENG101", "English Composition", 3, "Fall", 2023, "B"),     // 70-74%
+                new Enrollment(0, 2, "CS301", "Algorithms", 4, "Fall", 2023, null), // No grade yet
 
-                // Carol Williams enrollments (student ID will be 3 after auto-increment)
-                new Enrollment(0, 3, "CS201", "Fall", 2023, "A"),
-                new Enrollment(0, 3, "CS301", "Fall", 2023, "B"),
-                new Enrollment(0, 3, "MATH101", "Fall", 2023, "A"),
-                new Enrollment(0, 3, "CS401", "Fall", 2023, null) // No grade yet
+                // Carol Williams enrollments (student ID 3) - Excellent student
+                new Enrollment(0, 3, "CS201", "Data Structures", 4, "Fall", 2023, "A+"),    // 90%+
+                new Enrollment(0, 3, "CS301", "Algorithms", 4, "Fall", 2023, "B"),     // 70-74%
+                new Enrollment(0, 3, "MATH101", "Calculus I", 4, "Fall", 2023, "A+"),    // 90%+
+                new Enrollment(0, 3, "CS401", "Software Engineering", 3, "Fall", 2023, null), // No grade yet
+
+                // Biruk A enrollments (student ID 4) - New student, no grades yet
+                new Enrollment(0, 4, "CS101", "Introduction to Computer Science", 3, "Fall", 2023, null),
+                new Enrollment(0, 4, "CS201", "Data Structures", 4, "Fall", 2023, null),
+                new Enrollment(0, 4, "MATH101", "Calculus I", 4, "Fall", 2023, null),
+                new Enrollment(0, 4, "ENG101", "English Composition", 3, "Fall", 2023, null)
         );
 
         for (Enrollment enrollment : enrollments) {
@@ -156,33 +195,73 @@ public class DatabaseInitializer {
 
     /**
      * Creates sample coursework grades with realistic marks for the new marking scheme.
-     * Assignment: out of 20, Mid-Exam: out of 30, Final Exam: out of 50
+     * This method now works with the actual coursework items created by CourseworkInitializer.
      */
     private void createSampleCourseworkGrades() {
-        List<CourseworkGrade> grades = Arrays.asList(
-                // Alice Smith grades for CS101 (good student)
-                new CourseworkGrade(0, 1, "CS101", 1, 18),  // Assignment: 18/20 (90%)
-                new CourseworkGrade(0, 1, "CS101", 2, 27),  // Mid-Exam: 27/30 (90%)
-                new CourseworkGrade(0, 1, "CS101", 3, 45),  // Final: 45/50 (90%)
+        try {
+            System.out.println("Creating sample coursework grades...");
 
-                // Alice Smith grades for CS201 (good student)
-                new CourseworkGrade(0, 1, "CS201", 4, 17),  // Assignment: 17/20 (85%)
-                new CourseworkGrade(0, 1, "CS201", 5, 26),  // Mid-Exam: 26/30 (87%)
-                new CourseworkGrade(0, 1, "CS201", 6, 43),  // Final: 43/50 (86%)
+            // Wait for coursework items to be created
+            Thread.sleep(200);
 
-                // Bob Johnson grades for CS101 (average student)
-                new CourseworkGrade(0, 2, "CS101", 7, 15),  // Assignment: 15/20 (75%)
-                new CourseworkGrade(0, 2, "CS101", 8, 22),  // Mid-Exam: 22/30 (73%)
-                new CourseworkGrade(0, 2, "CS101", 9, 35),  // Final: 35/50 (70%)
+            List<CourseworkGrade> grades = new ArrayList<>();
 
-                // Carol Williams grades for MATH101 (excellent student)
-                new CourseworkGrade(0, 3, "MATH101", 10, 19), // Assignment: 19/20 (95%)
-                new CourseworkGrade(0, 3, "MATH101", 11, 29), // Mid-Exam: 29/30 (97%)
-                new CourseworkGrade(0, 3, "MATH101", 12, 48)  // Final: 48/50 (96%)
-        );
+            // Alice Smith grades (ID: 1) - Excellent student
+            createGradesForStudent(grades, 1, "CS101", 92.0);    // A+ grade (90%+)
+            createGradesForStudent(grades, 1, "CS201", 87.0);    // A grade (85-89%)
+            createGradesForStudent(grades, 1, "MATH101", 96.0);  // A+ grade (90%+)
 
-        for (CourseworkGrade grade : grades) {
-            courseworkDetails.createCourseworkGrade(grade);
+            // Bob Johnson grades (ID: 2) - Average student
+            createGradesForStudent(grades, 2, "CS101", 62.0);    // C+ grade (60-64%)
+            createGradesForStudent(grades, 2, "ENG101", 72.0);    // B grade (70-74%)
+
+            // Carol Williams grades (ID: 3) - Excellent student
+            createGradesForStudent(grades, 3, "CS201", 91.0);    // A+ grade (90%+)
+            createGradesForStudent(grades, 3, "CS301", 72.0);    // B grade (70-74%)
+            createGradesForStudent(grades, 3, "MATH101", 94.0);  // A+ grade (90%+)
+
+            // Biruk A grades (ID: 4) - New student, all zeros
+            createGradesForStudent(grades, 4, "CS101", 0.0);
+            createGradesForStudent(grades, 4, "CS201", 0.0);
+            createGradesForStudent(grades, 4, "MATH101", 0.0);
+            createGradesForStudent(grades, 4, "ENG101", 0.0);
+
+            // Save all grades
+            for (CourseworkGrade grade : grades) {
+                courseworkDetails.createCourseworkGrade(grade);
+            }
+
+            System.out.println("Created " + grades.size() + " sample coursework grades.");
+
+        } catch (Exception e) {
+            System.err.println("Error creating sample coursework grades: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Helper method to create grades for a student for a specific course.
+     */
+    private void createGradesForStudent(List<CourseworkGrade> grades, int studentId,
+                                        String courseCode, double targetPercentage) {
+
+        try {
+            // Get all coursework items for this course
+            List<CourseworkItem> courseItems = courseworkDetails.getCourseworkItemsByCourse(courseCode);
+
+            for (CourseworkItem item : courseItems) {
+                double marks = (targetPercentage / 100.0) * item.getTotalMarks();
+
+                CourseworkGrade grade = new CourseworkGrade();
+                grade.setStudentId(studentId);
+                grade.setItemId(item.getItemId());
+                grade.setCourseCode(courseCode);
+                grade.setMarksObtained(marks);
+
+                grades.add(grade);
+            }
+        } catch (Exception e) {
+            System.err.println("Error creating grades for student " + studentId + " in course " + courseCode + ": " + e.getMessage());
         }
     }
 }

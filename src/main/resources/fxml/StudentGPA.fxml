@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.StudentGPAController"
+      spacing="20" styleClass="gpa-container">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="GPA &amp; Academic Progress" styleClass="section-title"/>
+
+    <!-- Circular GPA Indicator -->
+    <HBox spacing="30" alignment="CENTER" styleClass="gpa-indicator-container">
+        <VBox spacing="10" alignment="CENTER">
+            <StackPane fx:id="circularGPAContainer" prefWidth="270" prefHeight="270"/>
+            <Label text="Current CGPA" styleClass="gpa-indicator-label"/>
+        </VBox>
+
+        <VBox spacing="15" alignment="CENTER_LEFT">
+            <Label fx:id="cgpaLabel" styleClass="gpa-value-large"/>
+            <Label fx:id="standingLabel" styleClass="standing-label"/>
+            <Label fx:id="eligibilityLabel" styleClass="eligibility-label"/>
+        </VBox>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Academic Metrics -->
+    <GridPane hgap="20" vgap="15" alignment="CENTER">
+        <Label text="Completed Credits:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="metric-label"/>
+        <Label fx:id="completedCreditsLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="metric-value"/>
+
+        <Label text="Required Credits:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="metric-label"/>
+        <Label fx:id="requiredCreditsLabel" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="metric-value"/>
+
+        <Label text="Credits Remaining:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="metric-label"/>
+        <Label fx:id="remainingCreditsLabel" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="metric-value"/>
+    </GridPane>
+
+    <VBox spacing="10" styleClass="progress-box">
+        <Label text="Progress Towards Graduation" styleClass="progress-title"/>
+        <ProgressBar fx:id="progressBar" prefWidth="400" progress="0.0"/>
+        <Label fx:id="progressLabel" text="0% Complete" styleClass="progress-label"/>
+    </VBox>
+
+    <Separator/>
+
+    <Label text="Semester GPA History" styleClass="subsection-title"/>
+
+    <VBox spacing="10" prefWidth="500">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <!-- GridPane for semester GPA data -->
+        <GridPane fx:id="semesterGpaGrid" hgap="10" vgap="5" style="-fx-background-color: white; -fx-border-color: #34495e; -fx-border-width: 1px; -fx-padding: 10;">
+            <!-- Header row -->
+            <Label text="Semester" style="-fx-font-weight: bold; -fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 5;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label text="Year" style="-fx-font-weight: bold; -fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 5;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Semester GPA" style="-fx-font-weight: bold; -fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 5;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <Label text="Credits" style="-fx-font-weight: bold; -fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 5;" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+        </GridPane>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Refresh" fx:id="refreshButton" onAction="#handleRefresh" styleClass="primary-button"/>
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+</VBox>

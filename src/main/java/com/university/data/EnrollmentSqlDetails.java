@@ -11,7 +11,7 @@ import java.util.Optional;
  * SQLite implementation of EnrollmentDetails interface.
  * Demonstrates concrete implementation of persistence layer following the DIP principle.
  * Provides CRUD operations for enrollment data using SQLite database.
-*/
+ */
 public class EnrollmentSqlDetails implements EnrollmentDetails {
 
     private final DatabaseConnection dbConnection;
@@ -66,7 +66,14 @@ public class EnrollmentSqlDetails implements EnrollmentDetails {
     @Override
     public List<Enrollment> getEnrollmentsByStudentId(int studentId) {
         List<Enrollment> enrollments = new ArrayList<>();
-        String sql = "SELECT * FROM enrollments WHERE studentId = ? ORDER BY year DESC, semester DESC";
+        String sql = """
+            SELECT e.enrollmentId, e.studentId, e.courseCode, e.semester, e.year, e.finalGrade,
+                   c.title as courseTitle, c.creditHours as credits
+            FROM enrollments e
+            JOIN courses c ON e.courseCode = c.courseCode
+            WHERE e.studentId = ?
+            ORDER BY e.year DESC, e.semester DESC
+            """;
 
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -193,6 +200,17 @@ public class EnrollmentSqlDetails implements EnrollmentDetails {
         enrollment.setSemester(rs.getString("semester"));
         enrollment.setYear(rs.getInt("year"));
         enrollment.setFinalGrade(rs.getString("finalGrade"));
+
+        // Set course details from JOIN
+        try {
+            enrollment.setCourseTitle(rs.getString("courseTitle"));
+            enrollment.setCredits(rs.getInt("credits"));
+        } catch (SQLException e) {
+            // Handle case where JOIN didn't include course details
+            enrollment.setCourseTitle("Unknown Course");
+            enrollment.setCredits(0);
+        }
+
         return enrollment;
     }
 }

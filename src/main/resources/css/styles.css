@@ -197,9 +197,6 @@
     -fx-text-fill: #000000;
     -fx-font-size: 12px;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 8 10;
-    -fx-border-color: #e9ecef;
-    -fx-border-width: 0 0 1 0;
 }
 
 .table-row-cell:selected {

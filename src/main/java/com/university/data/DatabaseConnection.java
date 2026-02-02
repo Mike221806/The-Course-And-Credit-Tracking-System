@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.io.File;
 
 /**
  * Database connection utility class.
@@ -11,14 +12,51 @@ import java.sql.Statement;
  * Provides centralized database configuration and connection management.
  */
 public class DatabaseConnection {
-    private static final String DB_URL = "jdbc:sqlite:university.db";
+    private static String DB_URL;
     private static Connection connection;
     private static final DatabaseConnection instance = new DatabaseConnection();
 
     /**
      * Private constructor to prevent instantiation.
      */
-    private DatabaseConnection() {}
+    private DatabaseConnection() {
+        initializeDatabasePath();
+    }
+
+    /**
+     * Initializes the database path to be in the same directory as the JAR file.
+     */
+    private void initializeDatabasePath() {
+        try {
+            // Check if we're running from a JAR file
+            boolean isRunningFromJar = DatabaseConnection.class.getResource("DatabaseConnection.class").toString().startsWith("jar:");
+
+            if (isRunningFromJar) {
+                // Running from JAR - create database in same directory as JAR
+                String jarPath = DatabaseConnection.class.getProtectionDomain()
+                        .getCodeSource().getLocation().toURI().getPath();
+
+                File jarDir = new File(jarPath).getParentFile();
+                if (jarDir == null) {
+                    jarDir = new File(".");
+                }
+
+                File dbFile = new File(jarDir, "university.db");
+                DB_URL = "jdbc:sqlite:" + dbFile.getAbsolutePath();
+                System.out.println("JAR detected - Database path: " + DB_URL);
+            } else {
+                // Running from IDE - use project directory
+                File dbFile = new File("university.db");
+                DB_URL = "jdbc:sqlite:" + dbFile.getAbsolutePath();
+                System.out.println("IDE detected - Database path: " + DB_URL);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error determining database path: " + e.getMessage());
+            // Fallback to current directory
+            DB_URL = "jdbc:sqlite:university.db";
+        }
+    }
 
     /**
      * Gets the singleton instance of DatabaseConnection.

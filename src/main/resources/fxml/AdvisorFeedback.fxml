@@ -33,4 +33,3 @@
 
     <Label fx:id="statusLabel" styleClass="status-label"/>
 </VBox>
-

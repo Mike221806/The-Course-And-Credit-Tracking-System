@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.AdvisorSearchStudentController"
+      spacing="20" styleClass="search-container">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Search Students" styleClass="section-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Search Type:"/>
+        <ComboBox fx:id="searchTypeComboBox" prefWidth="150"/>
+        <Label text="Search:"/>
+        <TextField fx:id="searchField" prefWidth="200"/>
+        <Button text="Search" fx:id="searchButton" onAction="#handleSearch" styleClass="primary-button"/>
+    </HBox>
+
+    <TableView fx:id="studentsTable" VBox.vgrow="ALWAYS" prefHeight="300" prefWidth="850">
+        <columns>
+            <TableColumn fx:id="studentIdColumn" text="Student ID" prefWidth="100" sortable="false"/>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="220" sortable="false"/>
+            <TableColumn fx:id="programColumn" text="Program" prefWidth="170" sortable="false"/>
+            <TableColumn fx:id="usernameColumn" text="Username" prefWidth="150" sortable="false"/>
+            <TableColumn fx:id="cgpaColumn" text="CGPA" prefWidth="80" sortable="false"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Load All Students" fx:id="loadAllButton" onAction="#handleLoadAll" styleClass="secondary-button"/>
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+</VBox>
