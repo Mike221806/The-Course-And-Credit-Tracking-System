@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.AdvisorFeedbackController"
+      spacing="20" styleClass="feedback-container">
 
-</AnchorPane>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Add Student Feedback" styleClass="section-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Select Student:"/>
+        <ComboBox fx:id="studentComboBox" prefWidth="200"/>
+    </HBox>
+
+    <VBox spacing="10">
+        <Label text="Feedback:"/>
+        <TextArea fx:id="feedbackTextArea" prefHeight="150" prefWidth="400"
+                  promptText="Enter your feedback for the student here..."
+                  wrapText="true"/>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Add Feedback" fx:id="addButton" onAction="#handleAdd" styleClass="primary-button"/>
+        <Button text="Clear" fx:id="clearButton" onAction="#handleClear" styleClass="secondary-button"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" styleClass="status-label"/>
+</VBox>
+
