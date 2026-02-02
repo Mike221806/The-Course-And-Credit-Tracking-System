@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.university.ui.AdvisorManageStudentsController"
+      spacing="20" styleClass="manage-students-container">
 
-</AnchorPane>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Manage Students" styleClass="section-title"/>
+
+    <!-- Add New Student Section -->
+    <VBox spacing="15" styleClass="form-section">
+        <Label text="Add New Student" styleClass="subsection-title"/>
+        <GridPane hgap="15" vgap="10">
+            <Label text="Full Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+
+            <Label text="Username:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="usernameField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+            <Label text="Program:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="programField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="200"/>
+
+            <Label text="Required Credits:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="requiredCreditsField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
+
+            <Label text="Temporary Password:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="tempPasswordField" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="200"/>
+
+            <Button text="Generate Temp Password" fx:id="generatePasswordButton"
+                    onAction="#generateTempPassword" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Label fx:id="generatedPasswordLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                   styleClass="info-label"/>
+
+            <Button text="Add Student" fx:id="addStudentButton"
+                    onAction="#addStudent" GridPane.rowIndex="6" GridPane.columnIndex="0"
+                    GridPane.columnSpan="2" styleClass="primary-button"/>
+        </GridPane>
+    </VBox>
+
+    <!-- Existing Students Section -->
+    <VBox spacing="15" styleClass="form-section">
+        <Label text="Existing Students" styleClass="subsection-title"/>
+        <TableView fx:id="studentsTable" prefHeight="300">
+            <columns>
+                <TableColumn fx:id="idColumn" text="Student ID" prefWidth="100"/>
+                <TableColumn fx:id="nameColumn" text="Name" prefWidth="200"/>
+                <TableColumn fx:id="usernameColumn" text="Username" prefWidth="150"/>
+                <TableColumn fx:id="programColumn" text="Program" prefWidth="150"/>
+                <TableColumn fx:id="creditsColumn" text="Credits" prefWidth="100"/>
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- Status Label -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label fx:id="statusLabel" styleClass="status-label"/>
+    </HBox>
+</VBox>
